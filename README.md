@@ -6,7 +6,7 @@
 4. Multiple endings
 5. Dialogue system
 6. Game should be shorter
-7. Combat system (pokemon)
+7. Combat system (turn-based)
 8. Saving system/inventory
 9. Objective at start
 10. Stats like HP, levels, weapons, one-use items, etc.

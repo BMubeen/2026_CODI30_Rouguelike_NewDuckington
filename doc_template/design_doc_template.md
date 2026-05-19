@@ -18,7 +18,7 @@
 ## Story / Theme
 
 
-## Featrure Requiements / Typs
+## Feature Requirements / Types
 
 
 ## Supporting Documents
