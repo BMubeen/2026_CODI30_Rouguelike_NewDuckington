@@ -1,5 +1,8 @@
 #!/bin/bash
 
+export GAME_ROOT="$(dirname "$0")/.."
+source "$GAME_ROOT/data/player_data.sh"
+
 # Regular colours
 BLACK='\033[0;30m'
 RED='\033[0;31m'
@@ -24,6 +27,8 @@ shop() {
 	echo -e "${RED}===================${NC}"
 	echo 
 	echo
+	while true; do
+
 	printf "What do you want to do"
 	echo
 	echo "-------------------"
@@ -34,9 +39,28 @@ shop() {
 	echo -e "${RED}[5]  EXIT SHOP${NC}"
 	read shop_action
 	case $shop_action in
-	1)
-		 $item1>> player_data.sh
+		1)
+			PLAYER_ITEMS+=($item1)
+			echo ${PLAYER_ITEMS[@]}
+			;;
+		2)
+			PLAYER_ITEMS+=($item2)
+			echo ${PLAYER_ITEMS[@]}
+			;;
+		3)
+			;;
+		4)
+			;;
+		5)	
+			break
 
+			;;
+		*) 
+			
+			;;
+
+
+	esac
 
 
 
