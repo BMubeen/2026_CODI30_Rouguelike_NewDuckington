@@ -34,7 +34,10 @@ shop() {
 	echo -e "${RED}[5]  EXIT SHOP${NC}"
 	read shop_action
 	case $shop_action in
-		
+	1)
+		 $item1>> player_data.sh
+
+
 
 
 
