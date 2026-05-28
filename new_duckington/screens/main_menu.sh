@@ -75,18 +75,3 @@ get_and_check_input_is_valid()
 	read -p "ENTER CHOICE: " choice
 	#use logic to test that the users input is valid for our use. Is only a single digit number for example...
 }
-
-while [[ $use_input != "valid" ]]
-do
-	clear
-display_title
-display_inital_menu
-get_user_option
-get_and_check_input_is_valid
-
-
-	
-
-done
-
-
