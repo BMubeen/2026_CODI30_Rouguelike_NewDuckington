@@ -2,9 +2,10 @@
 
 use_input="not set" #valid or error as needed...
 choice=""
+# Replace the fragile $0-based path with BASH_SOURCE
+export GAME_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 source "$GAME_ROOT/save/save_game.sh"
-
-
+source "$GAME_ROOT/save/load_game.sh"
 display_title(){
 	echo -e "
 ██████╗  ██████╗   ██████╗ ██╗   ██╗ ███████╗ ██╗      ██╗ ██╗  ██╗ ███████╗
@@ -75,3 +76,4 @@ get_and_check_input_is_valid()
 	read -p "ENTER CHOICE: " choice
 	#use logic to test that the users input is valid for our use. Is only a single digit number for example...
 }
+
