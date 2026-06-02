@@ -44,22 +44,19 @@ action_selection() {
 
 	            ;;
 	            
-	        2|skill|Skill)
-	            
-	            echo -e "${BLUE}You prepare a skill...${NC}"
-	            bash skill.sh
+			2|skill)
+				echo -e "${BLUE}You prepare a skill...${NC}"
+				bash "$GAME_ROOT/combat/skill.sh"
 	            ;;
 	            
-	        3|item|Item)
-	            
-	            echo -e "${YELLOW}Opening inventory...${NC}"
-	            bash item.sh
+			3|item)
+				echo -e "${YELLOW}Opening inventory...${NC}"
+				bash "$GAME_ROOT/combat/item.sh"
 	            ;;
 	            
-	        4|flee|Flee)
-	            
-	            echo -e "${GREEN}You attempt to flee!${NC}"
-	            bash flee.sh
+			4|flee)
+				echo -e "${GREEN}You attempt to flee!${NC}"
+				bash "$GAME_ROOT/combat/flee.sh"
 	            ;;
 	            
 	        *)
