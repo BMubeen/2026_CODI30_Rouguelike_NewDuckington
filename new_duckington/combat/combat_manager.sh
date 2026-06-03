@@ -102,6 +102,7 @@ while [[ $battle_end == false ]]; do
 		"$enemy_bar" "$enemy_percent" "${BEAR_GRUNT[hp]}" "${BEAR_GRUNT[hp_max]}"
 		# PENGDA CLAUDE CODE END
 		# PS: READ WHAT THE CODE ACTUALLY DOES CUZ I HAD TO FIX ERRORS FROM IT
+		# PPS: IT WAS ONLY 3 LINES AND ONE OF THEM WAS A COMMENT
 
 		echo
 
