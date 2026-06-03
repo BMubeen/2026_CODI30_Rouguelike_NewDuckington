@@ -8,17 +8,17 @@ attack() {
 		DAMAGE_DONE=1
 	fi
 
-	echo "you have $PLAYER_ATK damage and ${BEAR_GRUNT[name]} has ${BEAR_GRUNT[def]} defence"
+	echo "you have $PLAYER_ATK damage and ${current_enemy[name]} has ${current_enemy[def]} defence"
 
-	BEAR_GRUNT[hp]=$(( ${BEAR_GRUNT[hp]} - $DAMAGE_DONE ))
+	current_enemy[hp]=$(( ${current_enemy[hp]} - $DAMAGE_DONE ))
 
-	if [[ ${BEAR_GRUNT[hp]} -lt 1 ]]; then
-		${BEAR_GRUNT[hp]}=0
+	if [[ ${current_enemy[hp]} -lt 1 ]]; then
+		${current_enemy[hp]}=0
 	fi
 
-	echo "${BEAR_GRUNT[name]} has taken $DAMAGE_DONE damage the enemy now has ${BEAR_GRUNT[hp]} HP"
+	echo "${current_enemy[name]} has taken $DAMAGE_DONE damage the enemy now has ${current_enemy[hp]} HP"
 
-	if [[ ${BEAR_GRUNT[hp]} == 0 ]]; then
+	if [[ ${current_enemy[hp]} == 0 ]]; then
 		win_screen
 		echo "returning to main menu"
 		battle_end=true
