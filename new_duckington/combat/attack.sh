@@ -2,19 +2,23 @@
 
 attack() {
 
-	DAMAGE_DONE=$(( $PLAYER_ATK - $ENEMY_DEF ))
+	DAMAGE_DONE=$(( $PLAYER_ATK - ${current_enemy[def]} ))
 
-	echo "you have $PLAYER_ATK damage and $ENEMY_NAME has $ENEMY_DEF defence"
-
-	ENEMY_HP=$(( $ENEMY_HP - 999 ))
-
-	if [[ $ENEMY_HP -lt 1 ]]; then
-		ENEMY_HP=0
+	if [[ $DAMAGE_DONE -lt 1 ]]; then
+		DAMAGE_DONE=1
 	fi
 
-	echo "$ENEMY_NAME has taken $DAMAGE_DONE damage the enemy now has $ENEMY_HP HP"
+	echo "you have $PLAYER_ATK damage and ${current_enemy[name]} has ${current_enemy[def]} defence"
 
-	if [[ $ENEMY_HP == 0 ]]; then
+	current_enemy[hp]=$(( ${current_enemy[hp]} - $DAMAGE_DONE ))
+
+	if [[ ${current_enemy[hp]} -lt 1 ]]; then
+		${current_enemy[hp]}=0
+	fi
+
+	echo "${current_enemy[name]} has taken $DAMAGE_DONE damage the enemy now has ${current_enemy[hp]} HP"
+
+	if [[ ${current_enemy[hp]} == 0 ]]; then
 		win_screen
 		echo "returning to main menu"
 		battle_end=true

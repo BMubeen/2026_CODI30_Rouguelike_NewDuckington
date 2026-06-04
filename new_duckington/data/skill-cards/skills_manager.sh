@@ -7,8 +7,8 @@ source "$GAME_ROOT/system/stats.sh"
 
 learn_skill() {
     local SKILL_ID="$1"
-    local SKILL_FILE="$GAME_ROOT/data/skill-cards/Unequipped/$SKILL_ID.sh"
-    local EQUIPPED_DIRECTORY="$GAME_ROOT/data/skill-cards/Equipped"
+    local SKILL_FILE="$GAME_ROOT/data/skill-cards/unequipped/$SKILL_ID.sh"
+    local EQUIPPED_DIRECTORY="$GAME_ROOT/data/skill-cards/equipped"
 
     if [ ! -e "$SKILL_FILE" ]; then
         echo "You already have this skill equipped!"

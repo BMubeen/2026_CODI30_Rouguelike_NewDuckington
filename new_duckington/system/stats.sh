@@ -36,6 +36,69 @@ PLAYER_SKILL_CARDS="$PLAYER_SKILL_CARDS"
 EOF
 }
 
+source "$GAME_ROOT/data/enemy_data.sh"
+
+animated_hp_bar_line() {
+    # Source: https://github.com/extensionsapp/progre.sh
+    # Claude is a genius for this one
+    local current=$1
+    local max=$2
+    local width=20
+    local delay=0.01
+
+    [ "$max" -le 0 ] && max=1
+    [ "$current" -lt 0 ] && current=0
+    [ "$current" -gt "$max" ] && current=$max
+
+    local percent=$(( current * 100 / max ))
+    local filled=$(( current * width / max ))
+
+    # Colors
+    local RED='\033[1;31m'
+    local YELLOW='\033[1;33m'
+    local GREEN='\033[1;32m'
+    local RESET='\033[0m'
+
+    local color
+    if [ "$percent" -ge 70 ]; then
+        color=$GREEN
+    elif [ "$percent" -ge 30 ]; then
+        color=$YELLOW
+    else
+        color=$RED
+    fi
+
+    # Build the bar once
+    local bar=""
+    local empty=""
+    
+    for ((i=0; i<filled; i++)); do
+        bar="${bar}█"
+    done
+    
+    for ((i=0; i<width-filled; i++)); do
+        empty="${empty}░"
+    done
+
+    # Animate by printing progressively
+    for ((i=0; i<=filled; i++)); do
+        local partial_bar=""
+        for ((j=0; j<i; j++)); do
+            partial_bar="${partial_bar}█"
+        done
+        for ((j=i; j<width; j++)); do
+            partial_bar="${partial_bar}░"
+        done
+        
+        printf "\rHP [${color}%s${RESET}] %3d%% (%d/%d)" "$partial_bar" "$percent" "$current" "$max"
+        sleep "$delay"
+    done
+    
+    # Return the final bar with newline
+    printf "HP [${color}%s${RESET}] %3d%% (%d/%d)\n" "$bar$empty" "$percent" "$current" "$max"
+}
+
+
 display_player_stats() {
     echo "╔══════════════════════════════╗"
     echo "║       PLAYER  STATS          ║"
@@ -46,6 +109,7 @@ display_player_stats() {
     printf "║  ATK: %3d   DEF: %3d         ║\n" "$PLAYER_ATK" "$PLAYER_DEF"
     printf "║  SPD: %3d   LCK: %3d%%        ║\n" "$PLAYER_SPD" "$PLAYER_LCK"
     echo "╚══════════════════════════════╝"
+
 }
 
 display_player_equipment() {
@@ -83,8 +147,31 @@ display_player_skill_cards() {
     echo "╔═══════════════════════════════════════════╗"
     echo "║            PLAYER  SKILL CARDS            ║"
     echo "╠═══════════════════════════════════════════╣"
-    printf "║  Skill Cards: %-27s ║\n" "$PLAYER_SKILL_CARDS"
-    echo "║  Type the command 'show_card [card name]' ║"
-    echo "║  to see the details of a skill card.      ║"
+
+    if [ ${#PLAYER_SKILL_CARDS[@]} -eq 0 ]; then
+        printf "║  %-40s ║\n" "None"
+    fi
+    
+    local i=1
+    for item in "${PLAYER_SKILL_CARDS[@]}"; do
+        printf "║  [%2d] %-35.35s ║\n" "$i" "$item"
+        ((i++))
+    done
+
+    echo "╠═══════════════════════════════════════════╣"
+    echo "║  show_card <card name>                    ║"
     echo "╚═══════════════════════════════════════════╝"
 }
+
+display_enemy_stats() {
+    local -n enemy="$1"
+    echo "╔═════════════════════════════════════════╗"
+    printf "║  ENEMY: %-31s ║\n" "${enemy[name]}"
+    echo "╠═════════════════════════════════════════╣"
+    printf "║  HP : %5d/%-5d                       ║\n" "${enemy[hp]}" "${enemy[hp_max]}"
+    printf "║  ATK: %3d   DEF: %3d                    ║\n" "${enemy[atk]}" "${enemy[def]}"
+    printf "║  BASIC ATK: %-16s            ║\n" "${enemy[attack_name]}"
+    echo "╚═════════════════════════════════════════╝"
+
+}
+
